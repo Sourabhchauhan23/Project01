@@ -36,7 +36,7 @@ public class Google extends Base {
     @SuppressWarnings("unchecked")
     public void findAndOpenWebsiteInNewTab(String website) {
         List<WebElement> webElementList = googleLocator.allLinks;
-        Predicate predicate = x -> x.toString().contains(website);
+        Predicate predicate = x -> ((WebElement) x).getAttribute("href").contains(website);
         WebElement url = findWebElement(predicate, webElementList);
         System.out.println(url.getAttribute("href"));
         openLinkInNewtab(url);

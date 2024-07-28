@@ -1,8 +1,11 @@
 package StepDefination;
 
 import io.cucumber.java.After;
+import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import org.globalLogic.Pages.Actions.Background;
+
+import java.io.IOException;
 
 public class WorkFlow {
     Background background = new Background();
@@ -12,8 +15,11 @@ public class WorkFlow {
         background.openWebsite(website);
     }
 
-//    @After
-    public void closeBroser(){
+    @After
+    public void closeBroser(Scenario scenario) throws IOException {
+        if(scenario.isFailed()){
+            background.screenshot(scenario);
+        }
         background.closeBrowser();
     }
 }

@@ -29,8 +29,9 @@ public class Base {
         driver.manage().window().maximize();
     }
 
-    public static void navigateTo(String website){
+    public static void navigateTo(String website) throws InterruptedException {
         driver.get(website);
+        Thread.sleep(10000);
     }
 
     @After
@@ -51,11 +52,12 @@ public class Base {
         return webElement.isDisplayed();
     }
 
-    public static WebElement findWebElement(Predicate<String> predicate, List<WebElement> webElementList){
+    //finds webelement from list of webelements depending on predicate
+    public static WebElement findWebElement(Predicate<WebElement> predicate, List<WebElement> webElementList){
         WebElement result = null;
         for (WebElement t : webElementList) {
             if(t.getAttribute("href")!=null) {
-                if (predicate.test(t.getAttribute("href"))) {
+                if (predicate.test(t)) {
                     result = t;
                     break;
                 }
@@ -69,7 +71,7 @@ public class Base {
         actions.keyDown(Keys.CONTROL).click(webElement).build().perform();
     }
 
-    public void navigateToTab( String Title){
+    public void navigateToTab(String Title){
         List<String> tabs = new ArrayList<>(driver.getWindowHandles());
         for(String tab : tabs){
             driver.switchTo().window(tab);
@@ -77,7 +79,6 @@ public class Base {
                 break;
             }
         }
-
     }
 
     }
